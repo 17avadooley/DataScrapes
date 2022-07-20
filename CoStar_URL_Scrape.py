@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Mar 28 16:17:04 2022
-
-@author: RBurns
-"""
-
 
 import pandas as pd
 from selenium import webdriver
@@ -31,22 +25,6 @@ os.environ['WDM_LOG_LEVEL'] = '0' # Webdriver_Manager set to silence output
 os.environ['WDM_PRINT_FIRST_LINE'] = 'False' # Webdriver_Manager set to silence first-line output on start
 
 def launch_webdriver():
-    """
-    Instantiate the webdriver application with explicitly defined options.
-    
-    Options set webdriver to maximized window at start, 
-
-    Parameters
-    ----------
-    webdriver_path : string, optional
-        Alternate filepath to directory containing chromedriver.exe.
-        The default is None.
-
-    Returns
-    -------
-    driver : webdriver
-        Initialized webdriver for retrieving and manipulating web pages.
-    """
     options = ChromeOptions()
     options.add_argument("--log-level=3")
     options.add_argument("start-maximized")
@@ -56,27 +34,6 @@ def launch_webdriver():
     return driver
 
 def scroll(driver, timeout):
-    """
-    Scroll down webpage with infinite scroll.
-
-    This function is a slightly modified version of the code from
-    artjomb at https://gist.github.com/artjomb/07209e859f9bf0206f76.
-
-    Parameters
-    ----------
-    driver : webdriver Object
-        Initialized webdriver for retrieving and manipulating web pages.
-    timeout : int
-        The number of seconds to put the driver to sleep before continuing
-        to scroll. This can be modified depending on connectivity and webpage
-        update speeds, so long as the page is given time to load before
-        scrolling further.
-
-    Returns
-    -------
-    None.
-
-    """
     scroll_pause_time = timeout
 
     # Get scroll height
@@ -113,10 +70,7 @@ while True :
     except TimeoutException:
         break
     
-#url_list = driver.find_elements(By.CSS_SELECTOR, "div.flex-Thumb.thumb-Border.mr3.pa2")#"section#exhibitor-results > div > table > tbody > tr > td > h3 > a")
 
-#for url in url_list : 
-#    print(url.get_attribute("href"))
     
 full_page = BeautifulSoup(driver.page_source) 
 full_page.prettify()
@@ -130,7 +84,6 @@ for url in url_list:
         continue 
     if 'exhibitor-details' in url:
         correct_url_list.append(url)
-#print(correct_url_list)
 
 
 correct_url_list = list(set(correct_url_list))
